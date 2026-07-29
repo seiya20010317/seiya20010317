@@ -36,7 +36,6 @@ viewBox="0 0 {WIDTH} {HEIGHT}" fill="none">
  .orbit{{stroke:#484f58}}.satellite{{fill:#c9d1d9}}
  .star{{fill:#8b949e}}.label{{fill:#c9d1d9}}
 }}
-@media(prefers-reduced-motion:reduce){{.motion{{display:none}}}}
 </style>
 <defs>
   <radialGradient id="ocean-light" cx="38%" cy="30%" r="72%">
