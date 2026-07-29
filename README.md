@@ -1,5 +1,7 @@
 <div align="center">
 
+<!-- profile-readme: self-hosted and generated in this repository -->
+
 <img src="./ascii.svg" width="460" alt="Animated ASCII portrait of Seiya Awano's cat"/>
 
 <img src="./stats.svg" width="620" alt="Seiya Awano's GitHub contributions in the last year"/>
