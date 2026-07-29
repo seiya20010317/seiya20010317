@@ -1,35 +1,47 @@
 #!/usr/bin/env python3
-"""Generate the profile's self-typing, emoji-like ASCII cat.
-
-The mascot is intentionally hand drawn instead of derived from a photograph:
-it stays friendly at README scale, never crops awkwardly, and needs only the
-Python standard library.
-"""
+"""Generate the profile's detailed, self-typing ASCII cat mascot."""
 
 import base64
 import html
 from pathlib import Path
 
+# One complete mascot: party hat, ears, face, paws, body, feet, and tail.
+# The second item chooses the restrained color role for each row.
 ART = (
-    "           *",
-    "          /_\\",
-    "         /___\\",
-    "        /\\_/\\",
-    "       ( ^.^ )",
-    "        > ^ <",
-    "       /|   |\\",
-    "      (_|   |_)",
-    "        /   \\",
-    "       (__|__)",
+    ("             .  *  .", "accent"),
+    ("                /\\", "accent"),
+    ("               /  \\", "accent"),
+    ("              /____\\", "accent"),
+    ("             /______\\", "accent"),
+    ("            /\\      /\\", "ink"),
+    ("           /  \\____/  \\", "ink"),
+    ("          /            \\", "ink"),
+    ("         |    ^    ^    |", "ink"),
+    ("      ---|      v       |---", "ink"),
+    ("         |   \\______/   |", "ink"),
+    ("          \\            /", "ink"),
+    ("           `-.______.-'", "ink"),
+    ("          __/|      |\\__", "ink"),
+    ("        /`   |      |   `\\", "ink"),
+    ("       (_    |      |    _)", "ink"),
+    ("         `---|  /\\  |---'  )", "ink"),
+    ("             (__)(__)  .-'", "ink"),
 )
 
-FONT_SIZE = 16.0
+FONT_SIZE = 15.0
 CHAR_WIDTH = FONT_SIZE * 0.6
-LINE_HEIGHT = 19.0
-ROW_DELAY = 0.11
-ROW_DURATION = 0.52
-LIGHT = "#6e7681"
-DARK = "#c9d1d9"
+LINE_HEIGHT = 17.0
+ROW_DELAY = 0.075
+ROW_DURATION = 0.54
+
+LIGHT = {
+    "ink": "#6e7681",
+    "accent": "#bf3989",
+}
+DARK = {
+    "ink": "#c9d1d9",
+    "accent": "#f778ba",
+}
 
 
 def embedded_font() -> str:
@@ -42,8 +54,12 @@ def embedded_font() -> str:
     )
 
 
+def theme(theme: dict[str, str]) -> str:
+    return "".join(f".{name}{{fill:{color}}}" for name, color in theme.items())
+
+
 def render() -> str:
-    cols = max(len(line) for line in ART)
+    cols = max(len(line) for line, _ in ART)
     width = cols * CHAR_WIDTH
     height = len(ART) * LINE_HEIGHT + 2
     family = (
@@ -56,44 +72,46 @@ def render() -> str:
         f'font-family="{family}">',
         "<style>",
         embedded_font(),
-        f".ink{{fill:{LIGHT}}}.cursor{{fill:{LIGHT}}}",
-        "@media(prefers-color-scheme:dark){"
-        f".ink{{fill:{DARK}}}.cursor{{fill:{DARK}}}}}",
-        "</style><defs>",
+        theme(LIGHT),
+        f".cursor{{fill:{LIGHT['ink']}}}",
+        "@media(prefers-color-scheme:dark){",
+        theme(DARK),
+        f".cursor{{fill:{DARK['ink']}}}",
+        "}</style><defs>",
     ]
 
     geometry = []
-    for index, line in enumerate(ART):
+    for index, (line, role) in enumerate(ART):
         y = index * LINE_HEIGHT
         x = (width - len(line) * CHAR_WIDTH) / 2
         line_width = len(line) * CHAR_WIDTH
         begin = index * ROW_DELAY
-        geometry.append((line, x, y, line_width, begin))
+        geometry.append((line, role, x, y, line_width, begin))
         parts.append(
             f'<clipPath id="row-{index}"><rect x="{x:.2f}" y="{y:.2f}" '
             f'height="{LINE_HEIGHT:.2f}" width="0">'
             f'<animate attributeName="width" from="0" to="{line_width:.2f}" '
-            f'begin="{begin:.2f}s" dur="{ROW_DURATION:.2f}s" '
+            f'begin="{begin:.3f}s" dur="{ROW_DURATION:.2f}s" '
             'fill="freeze"/></rect></clipPath>'
         )
     parts.append("</defs>")
 
-    for index, (line, x, y, line_width, begin) in enumerate(geometry):
+    for index, (line, role, x, y, line_width, begin) in enumerate(geometry):
         end = begin + ROW_DURATION
         parts.append(
             f'<text xml:space="preserve" x="{x:.2f}" '
-            f'y="{y + FONT_SIZE:.2f}" font-size="{FONT_SIZE}" class="ink" '
+            f'y="{y + FONT_SIZE:.2f}" font-size="{FONT_SIZE}" class="{role}" '
             f'clip-path="url(#row-{index})">'
             f"{html.escape(line, quote=False)}</text>"
         )
         parts.append(
-            f'<rect x="{x:.2f}" y="{y + 1:.2f}" width="2.4" '
+            f'<rect x="{x:.2f}" y="{y + 1:.2f}" width="2.2" '
             f'height="{FONT_SIZE:.2f}" class="cursor" opacity="0">'
             f'<animate attributeName="x" from="{x:.2f}" '
-            f'to="{x + line_width:.2f}" begin="{begin:.2f}s" '
+            f'to="{x + line_width:.2f}" begin="{begin:.3f}s" '
             f'dur="{ROW_DURATION:.2f}s" fill="freeze"/>'
-            f'<set attributeName="opacity" to=".65" begin="{begin:.2f}s"/>'
-            f'<set attributeName="opacity" to="0" begin="{end:.2f}s"/>'
+            f'<set attributeName="opacity" to=".58" begin="{begin:.3f}s"/>'
+            f'<set attributeName="opacity" to="0" begin="{end:.3f}s"/>'
             "</rect>"
         )
 
