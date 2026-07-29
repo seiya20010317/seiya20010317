@@ -3,13 +3,13 @@
 
 No third-party services and no dependencies — standard library only.
 
-Outputs, all sharing one visual language with ascii.svg (the portrait):
+Outputs, all sharing one visual language with earth.svg:
   stats.svg   hero total + weekly sparkline
   streak.svg  current and longest streak
   langs.svg   top languages, by bytes and by repo count
-  year.svg    the year as a character map, in the portrait's own ramp
+  year.svg    the year as a compact character map
 
-Every file uses the portrait's grey ink, a monospace face, a transparent
+Every file uses the same neutral ink, a monospace typeface, a transparent
 background, and the same left-to-right clipPath reveal with a cursor riding
 the edge. Motion is SMIL because GitHub strips <script> from READMEs.
 
@@ -57,7 +57,7 @@ query($login: String!, $from: DateTime!, $to: DateTime!) {
 }
 """
 
-# The portrait's ink is the data ink, so every graphic reads as one material.
+# Shared ink keeps every graphic reading as one system.
 LIGHT = dict(data="#6e7681", emph="#424a53", dim="#8c959f",
              rule="#d8dee4", surface="#ffffff")
 DARK = dict(data="#c9d1d9", emph="#f0f6fc", dim="#8b949e",
@@ -75,8 +75,8 @@ def face(filename, weight):
 
     An external font URL cannot work here: these SVGs are loaded through <img>,
     and browsers refuse to fetch subresources for an image document. Inlining is
-    also what pins the advance width — the portrait's grid assumes 0.600 em, and
-    a viewer whose default monospace is narrower would otherwise see it squeezed.
+    and also pins the text metrics so chart geometry stays consistent across
+    platforms.
     """
     with open(os.path.join(FONT_DIR, filename), "rb") as f:
         b64 = base64.b64encode(f.read()).decode("ascii")
@@ -97,8 +97,8 @@ def font_head():
 WIDTH = 620            # every graphic shares one column width
 LEFT = 34              # shared left inset, so stacked blocks line up
                        # (year.svg needs it for the weekday gutter)
-REVEAL = 1.30          # seconds; matches the portrait's cadence
-RAMP = [" ", ":", "+", "#", "@"]      # steps of the portrait's own ramp
+REVEAL = 1.30          # seconds; shared chart reveal cadence
+RAMP = [" ", ":", "+", "#", "@"]      # contribution intensity steps
 MON = ["jan", "feb", "mar", "apr", "may", "jun",
        "jul", "aug", "sep", "oct", "nov", "dec"]
 
