@@ -7,7 +7,7 @@ This prevents font-metric drift and avoids all external requests.
 | file | weight | use |
 |---|---:|---|
 | `jbmono-head.woff2` | 600 | section labels |
-| `jbmono-400.woff2` | 400 | chart labels |
+| `jbmono-400.woff2` | 400 | ASCII mascot and chart labels |
 | `jbmono-600.woff2` | 600 | chart values |
 
 JetBrains Mono is licensed under the SIL Open Font License 1.1. See `OFL.txt`.
