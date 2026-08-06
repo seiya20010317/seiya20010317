@@ -3,35 +3,9 @@
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&amp;display=swap');
       
-      .terminal-bg {
-        fill: #0d1117;
-        stroke: #30363d;
-        stroke-width: 1.5;
-        rx: 10px;
-      }
-      
-      .dot-red { fill: #ff5f56; }
-      .dot-yellow { fill: #ffbd2e; }
-      .dot-green { fill: #27c93f; }
-      
-      .term-title {
-        font-family: 'Fira Code', monospace;
-        font-size: 12px;
-        fill: #8b949e;
-        font-weight: 600;
-      }
-      
-      .prompt-user { fill: #ff79c6; font-weight: 700; }
-      .prompt-host { fill: #bd93f9; font-weight: 700; }
-      .prompt-sep { fill: #f8f8f2; }
-      .info-key { fill: #8be9fd; font-weight: 600; }
-      .info-val { fill: #f8f8f2; }
-      .info-accent { fill: #50fa7b; font-weight: 600; }
-      .info-cat { fill: #ffb86c; font-weight: 600; }
-
       .ascii-text {
         font-family: 'Fira Code', 'Courier New', monospace;
-        font-size: 10px;
+        font-size: 12px;
         white-space: pre;
       }
       
@@ -39,7 +13,6 @@
       .c-outline { fill: #bd93f9; font-weight: 700; } /* Neon purple outline */
       .c-inner-ear { fill: #ff79c6; font-weight: 700; } /* Pink inner ear */
       .c-eye { fill: #50fa7b; font-weight: 700; } /* Electric green eyes */
-      .c-pupil { fill: #50fa7b; font-weight: 700; }
       .c-nose { fill: #ff79c6; font-weight: 700; } /* Pink nose */
       .c-whisker { fill: #8be9fd; font-weight: 500; } /* Cyan whiskers */
       .c-fur { fill: #6272a4; font-weight: 400; } /* Medium fur density */
@@ -71,17 +44,17 @@
       }
 
       .eye-group {
-        transform-origin: 155px 135px;
+        transform-origin: 310px 130px;
         animation: blinkEyes 4s infinite;
       }
 
       .tail-group {
-        transform-origin: 230px 210px;
+        transform-origin: 385px 200px;
         animation: tailWiggle 3s ease-in-out infinite;
       }
 
       .ear-group {
-        transform-origin: 110px 85px;
+        transform-origin: 265px 75px;
         animation: earTwitch 5s ease-in-out infinite;
       }
 
@@ -91,42 +64,21 @@
 
       /* Light mode adaptation */
       @media (prefers-color-scheme: light) {
-        .terminal-bg {
-          fill: #ffffff;
-          stroke: #d0d7de;
-        }
-        .term-title { fill: #57606a; }
-        .prompt-user { fill: #d059b0; }
-        .prompt-host { fill: #8250df; }
-        .prompt-sep { fill: #24292f; }
-        .info-key { fill: #0550ae; }
-        .info-val { fill: #24292f; }
         .c-fur-dense { fill: #24292f; }
         .c-outline { fill: #6e40c9; }
+        .c-fur { fill: #57606a; }
       }
     </style>
   </defs>
 
-  <!-- Terminal Window Container -->
-  <rect x="10" y="10" width="600" height="310" class="terminal-bg" />
-  
-  <!-- Window Controls -->
-  <circle cx="30" cy="28" r="5.5" class="dot-red" />
-  <circle cx="46" cy="28" r="5.5" class="dot-yellow" />
-  <circle cx="62" cy="28" r="5.5" class="dot-green" />
-  <text x="310" y="32" text-anchor="middle" class="term-title">seiya@github: ~/neko-fetch</text>
-
-  <!-- Header Separator Line -->
-  <line x1="10" y1="46" x2="610" y2="46" stroke="#30363d" stroke-width="1" />
-
   <!-- Floating Sparkles / Purr -->
-  <g transform="translate(155, 62)" class="sparkle-group">
+  <g transform="translate(310, 52)" class="sparkle-group">
     <text class="ascii-text c-sparkle" text-anchor="middle" y="0">✦  ฅ^•ﻌ•^ฅ  ✦</text>
-    <text class="ascii-text c-sparkle" text-anchor="middle" y="10">✧  p u r r . . .  ✧</text>
+    <text class="ascii-text c-sparkle" text-anchor="middle" y="14">✧  p u r r . . .  ✧</text>
   </g>
 
-  <!-- Left Side: Ultra High-Density ASCII Cat -->
-  <g transform="translate(155, 175)">
+  <!-- Center: Ultra High-Density ASCII Cat -->
+  <g transform="translate(310, 165)">
     <!-- Tail (Animated Wiggle) -->
     <g class="tail-group">
       <text class="ascii-text" text-anchor="middle" y="35" x="75">
@@ -168,7 +120,7 @@
     </text>
 
     <!-- Line -35: Eyes & Whiskers (Eyes Animated Blink) -->
-    <text class="ascii-text" text-anchor="middle" y="-35">
+    <text class="ascii-text eye-group" text-anchor="middle" y="-35">
       <tspan class="c-outline">(</tspan><tspan class="c-whisker">==</tspan><tspan class="c-fur">::</tspan><tspan class="c-eye">(◕)</tspan><tspan class="c-fur">::::</tspan><tspan class="c-nose">^</tspan><tspan class="c-fur">::::</tspan><tspan class="c-eye">(◕)</tspan><tspan class="c-fur">::</tspan><tspan class="c-whisker">==</tspan><tspan class="c-outline">)</tspan>
     </text>
 
@@ -211,52 +163,5 @@
     <text class="ascii-text" text-anchor="middle" y="61">
       <tspan class="c-inner-ear"> " "  " "    " "  " "</tspan>
     </text>
-  </g>
-
-  <!-- Right Side: Neofetch Style Linux Distro Info -->
-  <g transform="translate(320, 75)">
-    <!-- User Prompt Header -->
-    <text class="ascii-text" x="0" y="0">
-      <tspan class="prompt-user">seiya</tspan><tspan class="prompt-sep">@</tspan><tspan class="prompt-host">neko-os</tspan>
-    </text>
-    <text class="ascii-text" x="0" y="14" fill="#bd93f9">----------------------------------</text>
-
-    <!-- Info Lines -->
-    <text class="ascii-text" x="0" y="36">
-      <tspan class="info-key">OS: </tspan><tspan class="info-val">NekoOS x86_64 (Linux 6.8-purr)</tspan>
-    </text>
-    <text class="ascii-text" x="0" y="54">
-      <tspan class="info-key">Host: </tspan><tspan class="info-val">Lassonde School CS Graduate</tspan>
-    </text>
-    <text class="ascii-text" x="0" y="72">
-      <tspan class="info-key">Uptime: </tspan><tspan class="info-val">24/7 (Building, Shipping &amp; Napping)</tspan>
-    </text>
-    <text class="ascii-text" x="0" y="90">
-      <tspan class="info-key">Shell: </tspan><tspan class="info-val">zsh 5.9 (x86_64-apple-darwin)</tspan>
-    </text>
-    <text class="ascii-text" x="0" y="108">
-      <tspan class="info-key">Editor: </tspan><tspan class="info-val">Neovim / VS Code</tspan>
-    </text>
-    <text class="ascii-text" x="0" y="126">
-      <tspan class="info-key">Stack: </tspan><tspan class="info-val">Python, JS, HTML/CSS, C++</tspan>
-    </text>
-    <text class="ascii-text" x="0" y="144">
-      <tspan class="info-key">Pet: </tspan><tspan class="info-cat">Super High-Density ASCII Cat ฅ^•ﻌ•^ฅ</tspan>
-    </text>
-    <text class="ascii-text" x="0" y="162">
-      <tspan class="info-key">Status: </tspan><tspan class="info-accent">Purring &amp; executing clean code</tspan>
-    </text>
-
-    <!-- Terminal Color Blocks (Dracula / Cyberpunk Palette) -->
-    <g transform="translate(0, 185)">
-      <rect x="0" y="0" width="16" height="12" fill="#6272a4" rx="2" />
-      <rect x="20" y="0" width="16" height="12" fill="#ff5555" rx="2" />
-      <rect x="40" y="0" width="16" height="12" fill="#50fa7b" rx="2" />
-      <rect x="60" y="0" width="16" height="12" fill="#f1fa8c" rx="2" />
-      <rect x="80" y="0" width="16" height="12" fill="#bd93f9" rx="2" />
-      <rect x="100" y="0" width="16" height="12" fill="#ff79c6" rx="2" />
-      <rect x="120" y="0" width="16" height="12" fill="#8be9fd" rx="2" />
-      <rect x="140" y="0" width="16" height="12" fill="#f8f8f2" rx="2" />
-    </g>
   </g>
 </svg>
