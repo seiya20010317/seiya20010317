@@ -2,7 +2,7 @@
 
 <!-- profile-readme: self-hosted and generated in this repository -->
 
-<img src="./earth.svg" width="460" alt="Continuously rotating illustrated Earth"/>
+<img src="./earth.svg?v=cat-1" width="620" alt="Super high-density cat ASCII art animation"/>
 
 <img src="./stats.svg" width="620" alt="Seiya Awano's GitHub contributions in the last year"/>
 
