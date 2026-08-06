@@ -275,7 +275,7 @@ def render() -> str:
 
 
 def main() -> None:
-    output = Path("earth.svg")
+    output = Path("cat.svg")
     svg = render()
     output.write_text(svg, encoding="utf-8")
     print(f"wrote {output}: {len(svg) / 1024:.1f} KB")
